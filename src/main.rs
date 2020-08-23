@@ -4,9 +4,8 @@ use clap::{App, Arg};
 const KEY_RANGE: u8 = 1 + ('Z' as u8) - ('A' as u8);
 
 fn shift_alphabetic(c: char, n: u8) -> char {
-    let m = 1 + ('Z' as u8) - ('A' as u8);
     let offset = (c as u8) - ('A' as u8);
-    let shift = (offset + n) % m;
+    let shift = (offset + n) % KEY_RANGE;
     ('A' as u8 + shift) as char
 }
 
