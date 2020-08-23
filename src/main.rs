@@ -1,6 +1,8 @@
 extern crate clap;
 use clap::{App, Arg};
 
+const KEY_RANGE: u8 = 1 + ('Z' as u8) - ('A' as u8);
+
 fn shift_alphabetic(c: char, n: u8) -> char {
     let m = 1 + ('Z' as u8) - ('A' as u8);
     let offset = (c as u8) - ('A' as u8);
@@ -17,6 +19,13 @@ fn shift_char(c: char, n: u8) -> char {
 
 pub fn shift(s: &String, n: u8) -> String {
     s.chars().map(|c| shift_char(c, n)).collect()
+}
+
+pub fn format_bruteforce_table(s: &String) {
+    for n in 0..KEY_RANGE {
+        let s_shifted = shift(s, n);
+        println!("{:2} | {}", n, s_shifted);
+    }
 }
 
 fn main() {
@@ -36,7 +45,7 @@ fn main() {
     let input = matches.value_of("input").expect("No input provided.");
     let input = String::from(input);
 
-    println!("input: {}", shift(&input, 0));
+    format_bruteforce_table(&input);
 }
 
 #[cfg(test)]
