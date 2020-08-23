@@ -3,7 +3,7 @@ use clap::{App, Arg};
 
 const KEY_RANGE: u8 = 1 + ('Z' as u8) - ('A' as u8);
 
-fn shift_alphabetic(c: char, n: u8) -> char {
+fn shift_alphabetic_char(c: char, n: u8) -> char {
     let offset = (c as u8) - ('A' as u8);
     let shift = (offset + n) % KEY_RANGE;
     ('A' as u8 + shift) as char
@@ -11,7 +11,7 @@ fn shift_alphabetic(c: char, n: u8) -> char {
 
 fn shift_char(c: char, n: u8) -> char {
     match c {
-        _ if c.is_alphabetic() => shift_alphabetic(c, n),
+        _ if c.is_alphabetic() => shift_alphabetic_char(c, n),
         _ => c,
     }
 }
@@ -20,9 +20,9 @@ pub fn shift(s: &String, n: u8) -> String {
     s.chars().map(|c| shift_char(c, n)).collect()
 }
 
-pub fn format_bruteforce_table(s: &String) {
+pub fn format_bruteforce_table(ciphered_message: &String) {
     for n in 0..KEY_RANGE {
-        let s_shifted = shift(s, n);
+        let s_shifted = shift(ciphered_message, n);
         println!("{:2} | {}", n, s_shifted);
     }
 }
